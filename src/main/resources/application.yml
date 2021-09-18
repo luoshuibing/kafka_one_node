@@ -1,0 +1,34 @@
+spring:
+  cloud:
+    stream:
+      autoCommitOffset: false
+      bindings:
+        input:
+          binder: kafka
+          destination: topic1
+          group: test
+          content-type: application/json
+          consumer:
+            headerMode: headers
+          producer:
+            headerMode: headers
+          auto.CommitOffset: false
+          auto.ack: false
+      kafka:
+        bindings:
+          input:
+            consumer:
+              autoCommitOffset: true
+              autoCommitOnError: false
+              ackEachRecord: true
+        binder:
+          brokers: 192.168.111.142:9092
+          configuration:
+            auto.offset.reset: latest
+            ackEachRecode:
+            max.poll.records: 1
+            max.poll.interval.ms: 5000
+  application:
+    name: kafka_application
+server:
+  port: 8080
